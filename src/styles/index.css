@@ -1,0 +1,168 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  font-family: Inter, system-ui, Segoe UI, Arial, sans-serif;
+  background: #080808;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(237, 199, 14, 0.09), transparent 28rem),
+    #080808;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hero-metal {
+  background:
+    linear-gradient(120deg, rgba(8, 8, 8, 0.18), rgba(8, 8, 8, 0.92)),
+    repeating-linear-gradient(
+      105deg,
+      rgba(255, 255, 255, 0.06) 0,
+      rgba(255, 255, 255, 0.06) 1px,
+      transparent 1px,
+      transparent 14px
+    ),
+    linear-gradient(135deg, #191919, #080808 48%, #2b2515);
+}
+
+.product-texture {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.055) 0,
+      rgba(255, 255, 255, 0.055) 1px,
+      transparent 1px,
+      transparent 8px
+    ),
+    radial-gradient(circle at 30% 20%, rgba(237, 199, 14, 0.14), transparent 18rem),
+    linear-gradient(135deg, #1d1d1d, #080808);
+}
+
+.metric-card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.035);
+  padding: 1.25rem;
+}
+
+.metric-card span {
+  color: #edc70e;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.metric-card strong {
+  display: block;
+  margin-top: 1.2rem;
+  color: #fff;
+  font-size: 1.08rem;
+}
+
+.metric-card p {
+  margin: 0.75rem 0 0;
+  color: rgba(255, 255, 255, 0.62);
+  line-height: 1.7;
+  font-size: 0.92rem;
+}
+
+.craft-step {
+  border: 1px solid rgba(237, 199, 14, 0.45);
+  background: rgba(0, 0, 0, 0.38);
+  padding: 1rem;
+  color: #edc70e;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.contact-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.035);
+  padding: 1rem;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.contact-row svg {
+  flex: 0 0 auto;
+  color: #edc70e;
+}
+
+.form-field {
+  display: grid;
+  gap: 0.65rem;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.form-field input,
+.form-field textarea,
+.form-field select {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  background: rgba(255, 255, 255, 0.035);
+  color: #fff;
+  padding: 0.95rem 1rem;
+  outline: none;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.form-field textarea {
+  resize: vertical;
+}
+
+.form-field input:focus,
+.form-field textarea:focus,
+.form-field select:focus {
+  border-color: rgba(237, 199, 14, 0.72);
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  color: rgba(255, 255, 255, 0.36);
+}
+
+.form-field select option {
+  background: #151515;
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-metal,
+  .product-texture {
+    background-size: auto, 56px 56px, auto;
+  }
+}
