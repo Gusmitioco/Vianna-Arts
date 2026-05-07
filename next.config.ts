@@ -21,6 +21,11 @@ const nextConfig: NextConfig = {
         destination: '/goblin/login',
         permanent: false,
       },
+      {
+        source: '/novidades',
+        destination: '/',
+        permanent: false,
+      },
     ];
   },
 };

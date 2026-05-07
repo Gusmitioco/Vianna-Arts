@@ -1,35 +1,16 @@
-'use client';
-
-import { Clock, Instagram, MapPin, MessageCircle, Send } from 'lucide-react';
-import type { FormEvent } from 'react';
+import {
+  Clock,
+  Image as ImageIcon,
+  Instagram,
+  MapPin,
+  MessageCircle,
+} from 'lucide-react';
 import { COMPANY } from '../data/company';
 import SectionTitle from './SectionTitle';
 
+const mapQuery = encodeURIComponent(COMPANY.address);
+
 export default function ContactSection() {
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const form = new FormData(event.currentTarget);
-    const name = form.get('name')?.toString().trim();
-    const phone = form.get('phone')?.toString().trim();
-    const interest = form.get('interest')?.toString().trim();
-    const message = form.get('message')?.toString().trim();
-
-    const whatsappMessage = encodeURIComponent(
-      [
-        'Olá! Gostaria de solicitar um orçamento.',
-        name ? `Nome: ${name}` : '',
-        phone ? `Telefone: ${phone}` : '',
-        interest ? `Interesse: ${interest}` : '',
-        message ? `Mensagem: ${message}` : '',
-      ]
-        .filter(Boolean)
-        .join('\n'),
-    );
-
-    window.open(`${COMPANY.whatsappUrl}?text=${whatsappMessage}`, '_blank');
-  };
-
   return (
     <section id="contato" className="bg-graphite px-5 py-20 lg:px-8">
       <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr]">
@@ -37,7 +18,7 @@ export default function ContactSection() {
           <SectionTitle
             eyebrow="Contato"
             title="Atendimento para orçamentos, projetos e peças personalizadas."
-            description="Fale pelo WhatsApp, acompanhe o Instagram ou envie uma mensagem com as informações principais do seu projeto. O orçamento pode ser online ou presencial."
+            description="Fale pelo WhatsApp, acompanhe o Instagram ou venha conhecer a Vianna Art's em Teixeira de Freitas. O orçamento pode ser online ou presencial."
           />
 
           <div className="mt-9 space-y-4">
@@ -60,48 +41,35 @@ export default function ContactSection() {
           </div>
         </div>
 
-        <form
-          className="border border-white/10 bg-coal p-6 shadow-hard md:p-8"
-          onSubmit={handleSubmit}
-        >
-          <div className="grid gap-5 md:grid-cols-2">
-            <label className="form-field">
-              Nome
-              <input name="name" type="text" placeholder="Seu nome" />
-            </label>
-            <label className="form-field">
-              Telefone
-              <input
-                name="phone"
-                type="tel"
-                placeholder="+55 73 99156-0123"
-              />
-            </label>
+        <div className="grid gap-5">
+          <div className="overflow-hidden border border-white/10 bg-coal shadow-hard">
+            <div className="relative aspect-[16/9] min-h-[260px] product-texture">
+              <div className="absolute inset-0 bg-gradient-to-br from-black/30 via-transparent to-gold/15" />
+              <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
+                <div className="grid h-16 w-16 place-items-center border border-gold/45 bg-black/35 text-gold shadow-gold">
+                  <ImageIcon size={30} strokeWidth={1.5} />
+                </div>
+                <p className="mt-5 text-sm font-semibold uppercase tracking-[0.22em] text-gold">
+                  Foto da fachada
+                </p>
+                <p className="mt-3 max-w-md text-sm leading-7 text-white/62">
+                  Espaço reservado para a imagem da frente da loja. Quando a foto
+                  estiver pronta, ela entra aqui substituindo este bloco.
+                </p>
+              </div>
+            </div>
           </div>
-          <label className="form-field mt-5">
-            Interesse
-            <input
-              name="interest"
-              type="text"
-              placeholder="Produto, serviço ou peça sob medida"
+
+          <div className="overflow-hidden border border-white/10 bg-coal shadow-hard">
+            <iframe
+              title="Mapa da Vianna Art's"
+              src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
+              className="h-[320px] w-full border-0"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
             />
-          </label>
-          <label className="form-field mt-5">
-            Mensagem
-            <textarea
-              name="message"
-              rows={5}
-              placeholder="Descreva sua ideia, medidas ou referência"
-            />
-          </label>
-          <button
-            type="submit"
-            className="mt-6 inline-flex w-full items-center justify-center gap-2 border border-gold bg-gold px-6 py-3.5 text-sm font-bold uppercase tracking-[0.12em] text-coal transition hover:bg-transparent hover:text-gold md:w-auto"
-          >
-            <Send size={18} />
-            Enviar mensagem
-          </button>
-        </form>
+          </div>
+        </div>
       </div>
     </section>
   );

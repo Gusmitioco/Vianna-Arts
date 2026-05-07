@@ -11,12 +11,10 @@ import {
 import ContactSection from '@/components/ContactSection';
 import FeaturedProducts from '@/components/FeaturedProducts';
 import Hero from '@/components/Hero';
-import LatestPosts from '@/components/LatestPosts';
 import SectionTitle from '@/components/SectionTitle';
 import ServiceCard from '@/components/ServiceCard';
 import WhatsAppCTA from '@/components/WhatsAppCTA';
 import { getFeaturedProducts } from '@/lib/products';
-import { getPublicPosts } from '@/lib/posts';
 
 const services = [
   {
@@ -58,10 +56,7 @@ const services = [
 ];
 
 export default async function HomePage() {
-  const [featuredProducts, posts] = await Promise.all([
-    getFeaturedProducts(),
-    getPublicPosts(),
-  ]);
+  const featuredProducts = await getFeaturedProducts();
 
   return (
     <>
@@ -142,7 +137,6 @@ export default async function HomePage() {
       </section>
 
       <FeaturedProducts products={featuredProducts} />
-      <LatestPosts posts={posts} />
       <WhatsAppCTA />
       <ContactSection />
     </>

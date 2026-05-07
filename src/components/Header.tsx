@@ -10,7 +10,6 @@ import { COMPANY } from '../data/company';
 const navItems = [
   { label: 'Início', href: '/' },
   { label: 'Produtos', href: '/produtos' },
-  { label: 'Novidades', href: '/novidades' },
 ];
 
 export default function Header() {

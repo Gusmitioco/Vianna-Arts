@@ -1,17 +1,13 @@
 import Link from 'next/link';
 import {
-  deletePostAction,
   deleteProductAction,
-  savePostAction,
   saveProductAction,
   signOutAction,
 } from '@/app/admin/actions';
 import { CATEGORIES } from '@/data/products';
-import type { Post } from '@/data/posts';
 import { hasSupabaseConfig } from '@/lib/env';
 import { requireAdmin } from '@/lib/auth';
 import { getAdminProducts } from '@/lib/products';
-import { getAdminPosts } from '@/lib/posts';
 
 type AdminPageProps = {
   searchParams: Promise<{ success?: string; error?: string }>;
@@ -29,7 +25,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
   }
 
   const admin = await requireAdmin();
-  const [products, posts] = await Promise.all([getAdminProducts(), getAdminPosts()]);
+  const products = await getAdminProducts();
 
   return (
     <section className="bg-coal px-5 py-12 lg:px-8">
@@ -131,55 +127,6 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
             ))}
           </div>
         </div>
-
-        <div className="mt-12 grid gap-8 xl:grid-cols-[0.85fr_1.15fr]">
-          <div className="border border-white/10 bg-graphite p-6 shadow-hard">
-            <h2 className="font-display text-3xl font-semibold text-white">
-              Nova postagem
-            </h2>
-            <PostForm />
-          </div>
-
-          <div className="space-y-5">
-            {posts.map((post) => (
-              <article
-                key={post.id}
-                className="border border-white/10 bg-graphite p-5 shadow-hard"
-              >
-                <div className="flex flex-col justify-between gap-4 md:flex-row">
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">
-                      {post.isPublished ? 'Publicado' : 'Rascunho'}
-                    </p>
-                    <h3 className="mt-2 text-2xl font-semibold text-white">
-                      {post.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-7 text-white/60">
-                      {post.excerpt}
-                    </p>
-                  </div>
-                  <form action={deletePostAction}>
-                    <input type="hidden" name="id" value={post.id} />
-                    <button
-                      type="submit"
-                      className="border border-red-400/45 px-4 py-2 text-sm font-semibold text-red-100 hover:bg-red-500/15"
-                    >
-                      Excluir
-                    </button>
-                  </form>
-                </div>
-                <details className="mt-5">
-                  <summary className="cursor-pointer text-sm font-semibold text-gold">
-                    Editar postagem
-                  </summary>
-                  <div className="mt-5">
-                    <PostForm post={post} />
-                  </div>
-                </details>
-              </article>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );
@@ -263,45 +210,6 @@ function ProductForm({
         className="border border-gold bg-gold px-6 py-3.5 text-sm font-bold uppercase tracking-[0.12em] text-coal transition hover:bg-transparent hover:text-gold"
       >
         Salvar produto
-      </button>
-    </form>
-  );
-}
-
-function PostForm({ post }: { post?: Post }) {
-  return (
-    <form action={savePostAction} className="mt-6 grid gap-5">
-      {post && <input type="hidden" name="id" value={post.id} />}
-      <input type="hidden" name="currentImageUrl" value={post?.imageUrl ?? ''} />
-      <label className="form-field">
-        Título
-        <input name="title" required defaultValue={post?.title} />
-      </label>
-      <label className="form-field">
-        Resumo
-        <textarea name="excerpt" required rows={3} defaultValue={post?.excerpt} />
-      </label>
-      <label className="form-field">
-        Conteúdo
-        <textarea name="content" required rows={6} defaultValue={post?.content} />
-      </label>
-      <label className="form-field">
-        Foto da postagem
-        <input name="image" type="file" accept="image/*" />
-      </label>
-      <label className="flex items-center gap-3 border border-white/10 bg-white/[0.035] p-3 text-sm text-white/70">
-        <input
-          name="isPublished"
-          type="checkbox"
-          defaultChecked={post?.isPublished ?? true}
-        />
-        Publicar postagem
-      </label>
-      <button
-        type="submit"
-        className="border border-gold bg-gold px-6 py-3.5 text-sm font-bold uppercase tracking-[0.12em] text-coal transition hover:bg-transparent hover:text-gold"
-      >
-        Salvar postagem
       </button>
     </form>
   );
