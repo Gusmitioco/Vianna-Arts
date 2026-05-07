@@ -8,8 +8,15 @@ export default function SmoothScrollManager() {
   const pathname = usePathname();
 
   useEffect(() => {
+    const pendingTop = window.sessionStorage.getItem('pending-scroll-top');
     const pendingHash = window.sessionStorage.getItem('pending-scroll-hash');
     const hash = pendingHash || window.location.hash.replace('#', '');
+
+    if (pendingTop) {
+      window.sessionStorage.removeItem('pending-scroll-top');
+      window.setTimeout(scrollToTop, 120);
+      return;
+    }
 
     if (!hash) {
       return;
@@ -22,7 +29,7 @@ export default function SmoothScrollManager() {
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement | null;
-      const anchor = target?.closest<HTMLAnchorElement>('a[href*="#"]');
+      const anchor = target?.closest<HTMLAnchorElement>('a[data-smooth-scroll]');
 
       if (!anchor) {
         return;
@@ -30,7 +37,7 @@ export default function SmoothScrollManager() {
 
       const url = new URL(anchor.href);
 
-      if (url.origin !== window.location.origin || !url.hash) {
+      if (url.origin !== window.location.origin) {
         return;
       }
 
@@ -42,11 +49,22 @@ export default function SmoothScrollManager() {
 
       if (nextPath === currentPath) {
         window.history.pushState(null, '', `${nextPath}${url.hash}`);
-        scrollToHash(hash);
+
+        if (hash) {
+          scrollToHash(hash);
+        } else {
+          scrollToTop();
+        }
+
         return;
       }
 
-      window.sessionStorage.setItem('pending-scroll-hash', hash);
+      if (hash) {
+        window.sessionStorage.setItem('pending-scroll-hash', hash);
+      } else {
+        window.sessionStorage.setItem('pending-scroll-top', '1');
+      }
+
       router.push(`${nextPath}${url.hash}`, { scroll: false });
     };
 
@@ -58,6 +76,13 @@ export default function SmoothScrollManager() {
   }, [router]);
 
   return null;
+}
+
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
 }
 
 function scrollToHash(hash: string) {

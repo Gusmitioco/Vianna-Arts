@@ -7,6 +7,8 @@ import { hasSupabaseConfig } from '@/lib/env';
 import { requireAdmin } from '@/lib/auth';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+
 export async function signInAction(formData: FormData) {
   if (!hasSupabaseConfig()) {
     redirect('/goblin/login?error=config');
@@ -202,6 +204,10 @@ async function uploadImage({
 
   if (!(image instanceof File) || image.size === 0) {
     return currentImageUrl;
+  }
+
+  if (!image.type.startsWith('image/') || image.size > MAX_IMAGE_SIZE) {
+    redirect('/goblin?error=invalid-image');
   }
 
   const supabase = await createSupabaseServerClient();

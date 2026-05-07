@@ -9,6 +9,20 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/admin',
+        destination: '/goblin',
+        permanent: false,
+      },
+      {
+        source: '/admin/login',
+        destination: '/goblin/login',
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

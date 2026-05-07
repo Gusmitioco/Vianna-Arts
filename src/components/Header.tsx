@@ -21,6 +21,7 @@ export default function Header() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
         <Link
           href="/"
+          data-smooth-scroll
           className="group flex items-center gap-3 text-left"
           aria-label="Voltar para o início"
         >
@@ -42,6 +43,7 @@ export default function Header() {
             <Link
               key={item.href}
               href={item.href}
+              data-smooth-scroll={item.href === '/' ? true : undefined}
               className={`px-4 py-2 text-sm font-semibold transition ${
                 pathname === item.href
                   ? 'text-gold'
@@ -53,6 +55,7 @@ export default function Header() {
           ))}
           <Link
             href="/#contato"
+            data-smooth-scroll
             className="px-4 py-2 text-sm font-semibold text-white/72 transition hover:text-white"
           >
             Contato
@@ -82,6 +85,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
+                data-smooth-scroll={item.href === '/' ? true : undefined}
                 onClick={() => setIsOpen(false)}
                 className={`border border-white/10 px-4 py-3 text-left text-sm font-semibold ${
                   pathname === item.href ? 'text-gold' : 'text-white'
@@ -92,6 +96,7 @@ export default function Header() {
             ))}
             <Link
               href="/#contato"
+              data-smooth-scroll
               onClick={() => setIsOpen(false)}
               className="border border-white/10 px-4 py-3 text-left text-sm font-semibold text-white"
             >

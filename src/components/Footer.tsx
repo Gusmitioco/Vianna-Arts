@@ -21,9 +21,13 @@ export default function Footer() {
             Navegação
           </p>
           <div className="mt-4 flex flex-col items-start gap-3 text-sm text-white/68">
-            <Link href="/">Início</Link>
+            <Link href="/" data-smooth-scroll>
+              Início
+            </Link>
             <Link href="/produtos">Produtos</Link>
-            <Link href="/#contato">Contato</Link>
+            <Link href="/#contato" data-smooth-scroll>
+              Contato
+            </Link>
           </div>
         </div>
 
