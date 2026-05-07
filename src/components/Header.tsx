@@ -1,6 +1,7 @@
 'use client';
 
 import { Menu, X } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
@@ -25,8 +26,15 @@ export default function Header() {
           className="group flex items-center gap-3 text-left"
           aria-label="Voltar para o início"
         >
-          <span className="grid h-11 w-11 place-items-center border border-gold/60 bg-gold text-sm font-black tracking-tight text-coal shadow-gold">
-            VA
+          <span className="relative h-12 w-12 overflow-hidden border border-gold/60 bg-black shadow-gold">
+            <Image
+              src="/logo/vianna-logo.png"
+              alt="Logo Vianna Art's Metal & Design"
+              fill
+              className="object-contain p-1"
+              priority
+              sizes="48px"
+            />
           </span>
           <span className="flex flex-col leading-tight">
             <span className="font-display text-lg font-semibold text-white">

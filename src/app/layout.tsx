@@ -6,9 +6,20 @@ import SmoothScrollManager from '@/components/SmoothScrollManager';
 import '@/styles/index.css';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://vianna-arts.vercel.app'),
   title: "Vianna Art's Metal & Design",
   description:
     "Peças em metal feitas à mão, unindo resistência, rusticidade e design. Portfólio institucional da Vianna Art's Metal & Design.",
+  openGraph: {
+    title: "Vianna Art's Metal & Design",
+    description:
+      'Peças em metal feitas à mão, unindo resistência, rusticidade e design.',
+    images: ['/logo/vianna-logo.png'],
+  },
+  icons: {
+    icon: '/logo/vianna-logo.png',
+    apple: '/logo/vianna-logo.png',
+  },
 };
 
 export default function RootLayout({
