@@ -1,4 +1,5 @@
 import { MessageCircle } from 'lucide-react';
+import Link from 'next/link';
 import { COMPANY } from '../data/company';
 import type { Product } from '../data/products';
 import ProductImage from './ProductImage';
@@ -28,13 +29,21 @@ export default function ProductCard({ product }: ProductCardProps) {
         <p className="mt-3 min-h-20 text-sm leading-7 text-white/62">
           {product.description}
         </p>
-        <a
-          href={`${COMPANY.whatsappUrl}?text=${message}`}
-          className="mt-5 inline-flex items-center gap-2 border border-gold/70 px-4 py-2.5 text-sm font-semibold text-gold transition hover:bg-gold hover:text-coal"
-        >
-          <MessageCircle size={16} />
-          Tenho interesse
-        </a>
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Link
+            href={`/produtos/${product.slug}`}
+            className="inline-flex items-center gap-2 border border-gold bg-gold px-4 py-2.5 text-sm font-semibold text-coal transition hover:bg-transparent hover:text-gold"
+          >
+            Ver detalhes
+          </Link>
+          <a
+            href={`${COMPANY.whatsappUrl}?text=${message}`}
+            className="inline-flex items-center gap-2 border border-gold/70 px-4 py-2.5 text-sm font-semibold text-gold transition hover:bg-gold hover:text-coal"
+          >
+            <MessageCircle size={16} />
+            Interesse
+          </a>
+        </div>
       </div>
     </article>
   );

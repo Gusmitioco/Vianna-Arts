@@ -42,6 +42,33 @@ export async function getFeaturedProducts(): Promise<Product[]> {
   return products.filter((product) => product.featured).slice(0, 3);
 }
 
+export async function getProductBySlug(slug: string): Promise<Product | null> {
+  if (!hasSupabaseConfig()) {
+    return (
+      PRODUCTS.find((product) => product.slug === slug && product.isPublished) ?? null
+    );
+  }
+
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase
+    .from('products')
+    .select(
+      'id, slug, name, category, description, price, promotional_price, image_url, is_featured, is_published',
+    )
+    .eq('slug', slug)
+    .eq('is_published', true)
+    .maybeSingle();
+
+  if (error) {
+    console.error('Failed to load product detail:', error.message);
+    return (
+      PRODUCTS.find((product) => product.slug === slug && product.isPublished) ?? null
+    );
+  }
+
+  return data ? mapProductRow(data as ProductRow) : null;
+}
+
 export async function getAdminProducts(): Promise<Product[]> {
   if (!hasSupabaseConfig()) {
     return PRODUCTS;
