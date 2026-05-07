@@ -14,6 +14,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 88px;
 }
 
 body {
@@ -22,6 +23,10 @@ body {
   background:
     radial-gradient(circle at 20% 0%, rgba(237, 199, 14, 0.09), transparent 28rem),
     #080808;
+}
+
+#contato {
+  scroll-margin-top: 88px;
 }
 
 button,

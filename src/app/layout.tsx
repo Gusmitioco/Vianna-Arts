@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import SmoothScrollManager from '@/components/SmoothScrollManager';
 import '@/styles/index.css';
 
 export const metadata: Metadata = {
@@ -15,6 +16,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className="min-h-screen bg-coal text-ivory">
+        <SmoothScrollManager />
         <Header />
         <main>{children}</main>
         <Footer />
