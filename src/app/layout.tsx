@@ -17,8 +17,9 @@ export const metadata: Metadata = {
     images: ['/logo/vianna-logo.png'],
   },
   icons: {
-    icon: '/logo/vianna-logo.png',
-    apple: '/logo/vianna-logo.png',
+    icon: '/logo/va-logo.png',
+    shortcut: '/logo/va-logo.png',
+    apple: '/logo/va-logo.png',
   },
 };
 

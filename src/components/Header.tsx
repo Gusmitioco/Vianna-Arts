@@ -31,7 +31,7 @@ export default function Header() {
               src="/logo/vianna-logo.png"
               alt="Logo Vianna Art's Metal & Design"
               fill
-              className="object-contain p-1"
+              className="scale-[1.32] object-contain"
               priority
               sizes="48px"
             />

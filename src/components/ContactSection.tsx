@@ -71,7 +71,11 @@ export default function ContactSection() {
             </label>
             <label className="form-field">
               Telefone
-              <input name="phone" type="tel" placeholder="(00) 00000-0000" />
+              <input
+                name="phone"
+                type="tel"
+                placeholder="+55 73 99156-0123"
+              />
             </label>
           </div>
           <label className="form-field mt-5">

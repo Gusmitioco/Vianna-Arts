@@ -1,7 +1,7 @@
 export const COMPANY = {
   name: "Vianna Art's Metal & Design",
   tagline: 'Peças em metal feitas à mão, unindo resistência, rusticidade e design.',
-  whatsapp: '73 99156-0123',
+  whatsapp: '+55 73 99156-0123',
   whatsappUrl: 'https://wa.me/5573991560123',
   instagram: '@viannaartsss',
   instagramUrl: 'https://www.instagram.com/viannaartsss',
