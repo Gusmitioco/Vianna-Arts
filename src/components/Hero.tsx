@@ -10,7 +10,7 @@ export default function Hero() {
       <div className="relative mx-auto grid min-h-[calc(100vh-76px)] max-w-7xl items-center gap-12 px-5 py-16 md:min-h-[760px] lg:grid-cols-[1.08fr_0.92fr] lg:px-8">
         <div className="max-w-4xl">
           <p className="inline-flex border border-gold/40 bg-black/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-gold backdrop-blur">
-            Serralheria artesanal premium
+            Metal, madeira e projetos sob medida
           </p>
           <h1 className="mt-7 font-display text-5xl font-semibold leading-[1.02] text-white md:text-7xl xl:text-8xl">
             {COMPANY.name}
@@ -47,7 +47,7 @@ export default function Hero() {
                 Metal, acabamento e design
               </p>
               <p className="mt-3 text-2xl font-semibold leading-snug text-white">
-                Produtos rústicos e personalizados para projetos com identidade.
+                Peças com solda de qualidade, preço acessível e instalação gratuita.
               </p>
             </div>
           </div>

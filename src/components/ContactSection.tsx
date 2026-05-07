@@ -37,7 +37,7 @@ export default function ContactSection() {
           <SectionTitle
             eyebrow="Contato"
             title="Atendimento para orçamentos, projetos e peças personalizadas."
-            description="Fale pelo WhatsApp, acompanhe o Instagram ou envie uma mensagem com as informações principais do seu projeto."
+            description="Fale pelo WhatsApp, acompanhe o Instagram ou envie uma mensagem com as informações principais do seu projeto. O orçamento pode ser online ou presencial."
           />
 
           <div className="mt-9 space-y-4">

@@ -7,5 +7,8 @@ export const COMPANY = {
   instagramUrl: 'https://www.instagram.com/viannaartsss',
   address:
     'Av. Presidente Getúlio Vargas, Centro, 3040, Teixeira de Freitas - BA',
-  hours: 'Segunda a sexta, das 8h às 18h',
+  owner: 'Kauan Vianna',
+  hours: 'Segunda a sexta, das 8h às 16h',
+  paymentMethods: 'Pix, dinheiro, débito e crédito',
+  warranty: 'Garantia inicial de 7 dias',
 };

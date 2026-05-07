@@ -13,8 +13,9 @@ export default function WhatsAppCTA() {
             Quer uma peça sob medida ou um orçamento?
           </h2>
           <p className="mt-4 max-w-2xl text-white/65">
-            Envie sua ideia, medidas ou referência. A Vianna Art's analisa o
-            projeto e orienta a melhor solução em metal para o seu ambiente.
+            Envie sua ideia, medidas ou referência pelo WhatsApp. O orçamento
+            pode ser feito online ou presencialmente, com prazo definido conforme
+            cada projeto.
           </p>
         </div>
         <a

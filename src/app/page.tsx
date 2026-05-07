@@ -1,4 +1,13 @@
-import { Compass, Flame, Hammer, Ruler, ShieldCheck, Wrench } from 'lucide-react';
+import {
+  Banknote,
+  Compass,
+  Drill,
+  Hammer,
+  Home,
+  Ruler,
+  ShieldCheck,
+  Wrench,
+} from 'lucide-react';
 import ContactSection from '@/components/ContactSection';
 import FeaturedProducts from '@/components/FeaturedProducts';
 import Hero from '@/components/Hero';
@@ -12,39 +21,39 @@ import { getPublicPosts } from '@/lib/posts';
 const services = [
   {
     icon: Hammer,
-    title: 'Mãos francesas artesanais',
+    title: 'Peças em metal',
     description:
-      'Modelos rústicos, coloniais e modernos para prateleiras, bancadas e composições decorativas.',
+      'Mãos francesas, suportes, estruturas, peças decorativas e soluções metálicas sob medida.',
   },
   {
-    icon: ShieldCheck,
-    title: 'Suportes metálicos',
+    icon: Drill,
+    title: 'Metal com madeira',
     description:
-      'Peças reforçadas para uso residencial ou comercial, produzidas conforme necessidade de carga e acabamento.',
+      'Estantes, prateleiras e composições com madeira tratada e envernizada para um acabamento completo.',
   },
   {
     icon: Compass,
-    title: 'Decoração em metal',
+    title: 'Projetos personalizados',
     description:
-      'Itens decorativos com personalidade, ideais para ambientes que pedem presença, textura e autenticidade.',
+      'Projetos criados a partir da ideia do cliente, para casas, lojas, empresas e ambientes comerciais.',
   },
   {
-    icon: Ruler,
-    title: 'Peças sob medida',
+    icon: Home,
+    title: 'Instalação gratuita',
     description:
-      'Projetos personalizados a partir de referências, medidas e estilo desejado para cada aplicação.',
+      'Instalação sem custo adicional na residência do cliente, conforme disponibilidade e alinhamento do projeto.',
   },
   {
     icon: Wrench,
-    title: 'Serviços de serralheria',
+    title: 'Orçamento flexível',
     description:
-      'Soluções em metal com foco em resistência, acabamento e execução cuidadosa.',
+      'Atendimento por WhatsApp ou presencial para entender medidas, acabamento e melhor solução.',
   },
   {
-    icon: Flame,
-    title: 'Acabamentos rústicos',
+    icon: Banknote,
+    title: 'Pagamento facilitado',
     description:
-      'Detalhes visuais inspirados no trabalho manual, combinando metal, textura e um visual premium.',
+      'Pagamentos em Pix, dinheiro, débito e crédito, com opções pensadas para caber no orçamento.',
   },
 ];
 
@@ -62,29 +71,29 @@ export default async function HomePage() {
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <SectionTitle
             eyebrow="Sobre a empresa"
-            title="Serralheria com presença artesanal e acabamento de alto padrão."
-            description="A Vianna Art's Metal & Design desenvolve peças em metal que unem função, estética e durabilidade. Cada produto nasce do cuidado com medidas, proporção, resistência e identidade visual."
+            title="Peças em metal feitas para combinar com o seu projeto."
+            description="A Vianna Art's, conduzida por Kauan Vianna, desenvolve peças em metal e composições com madeira tratada para residências, lojas, empresas e projetos personalizados em Teixeira de Freitas."
           />
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="metric-card">
               <span>01</span>
-              <strong>Produção artesanal</strong>
-              <p>Peças feitas com atenção ao detalhe e acabamento individual.</p>
+              <strong>Solda de qualidade</strong>
+              <p>Peças produzidas com foco em resistência, firmeza e acabamento bem executado.</p>
             </div>
             <div className="metric-card">
               <span>02</span>
-              <strong>Projetos sob medida</strong>
-              <p>Soluções criadas para o tamanho, uso e estilo do cliente.</p>
+              <strong>Metal com madeira</strong>
+              <p>Opções com madeira tratada e envernizada para entregar a peça pronta para uso.</p>
             </div>
             <div className="metric-card">
               <span>03</span>
-              <strong>Visual rústico premium</strong>
-              <p>Metal com textura, contraste e presença para ambientes marcantes.</p>
+              <strong>Instalação gratuita</strong>
+              <p>Instalamos na residência do cliente sem custo adicional, conforme o projeto combinado.</p>
             </div>
             <div className="metric-card">
               <span>04</span>
-              <strong>Uso residencial e comercial</strong>
-              <p>Produtos para casas, lojas, escritórios, fachadas e decoração.</p>
+              <strong>Preço acessível</strong>
+              <p>Projetos personalizados com opções de pagamento em Pix, dinheiro, débito e crédito.</p>
             </div>
           </div>
         </div>
@@ -95,20 +104,20 @@ export default async function HomePage() {
           <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
             <SectionTitle
               eyebrow="Trabalho artesanal"
-              title="Metal trabalhado à mão para entregar peças únicas."
-              description="A produção valoriza o traço manual, o acabamento firme e o equilíbrio entre rusticidade e design. O resultado são peças fortes, funcionais e com personalidade própria."
+              title="Do jeito que você imagina, com orientação para ficar funcional."
+              description="Cada projeto é alinhado por WhatsApp ou presencialmente, considerando medidas, local de instalação, acabamento desejado e combinação com madeira quando fizer sentido."
             />
             <div className="relative min-h-[360px] overflow-hidden border border-gold/25 bg-metal p-8 shadow-hard">
               <div className="absolute inset-0 product-texture" />
               <div className="relative z-10 grid h-full content-between gap-10">
                 <p className="max-w-xl text-2xl font-semibold leading-snug text-white md:text-3xl">
-                  Do suporte discreto à peça decorativa, cada detalhe é pensado
-                  para servir ao projeto e valorizar o ambiente.
+                  Do suporte discreto à estante com madeira, cada peça é pensada
+                  para atender ao uso real e valorizar o ambiente.
                 </p>
                 <div className="grid gap-4 md:grid-cols-3">
                   <div className="craft-step">Medida</div>
-                  <div className="craft-step">Corte</div>
-                  <div className="craft-step">Acabamento</div>
+                  <div className="craft-step">Solda</div>
+                  <div className="craft-step">Instalação</div>
                 </div>
               </div>
             </div>
@@ -120,8 +129,8 @@ export default async function HomePage() {
         <div className="mx-auto max-w-7xl">
           <SectionTitle
             eyebrow="Serviços"
-            title="Soluções em metal para ambientes com identidade."
-            description="Produtos artesanais, serviços de serralheria e desenvolvimento sob medida para quem busca resistência sem abrir mão de design."
+            title="Soluções para casas, lojas, empresas e projetos personalizados."
+            description="A Vianna Art's trabalha com peças em metal, peças com madeira, instalação e orçamentos presenciais ou por WhatsApp."
             align="center"
           />
           <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
