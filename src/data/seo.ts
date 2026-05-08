@@ -1,4 +1,20 @@
-export const SITE_URL = 'https://vianna-arts.vercel.app';
+const DEFAULT_SITE_URL = 'https://vianna-arts.vercel.app';
+
+function normalizeSiteUrl(url?: string) {
+  const rawUrl = url?.trim();
+
+  if (!rawUrl) {
+    return DEFAULT_SITE_URL;
+  }
+
+  const urlWithProtocol = /^https?:\/\//i.test(rawUrl)
+    ? rawUrl
+    : `https://${rawUrl}`;
+
+  return urlWithProtocol.replace(/\/+$/, '');
+}
+
+export const SITE_URL = normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL);
 
 export const LOCAL_SEO = {
   city: 'Teixeira de Freitas',

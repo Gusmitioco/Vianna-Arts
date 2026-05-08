@@ -1,5 +1,6 @@
 import ProductsCatalog from '@/components/ProductsCatalog';
 import SectionTitle from '@/components/SectionTitle';
+import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
 import { LOCAL_SEO, SITE_URL } from '@/data/seo';
 import { getPublicProducts } from '@/lib/products';
 
@@ -24,6 +25,13 @@ export default async function ProductsPage() {
 
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Início', url: SITE_URL },
+          { name: 'Produtos', url: `${SITE_URL}/produtos` },
+        ]}
+      />
+
       <section className="relative overflow-hidden border-b border-white/10 bg-black px-5 py-20 lg:px-8">
         <div className="absolute inset-0 hero-metal opacity-70" />
         <div className="relative mx-auto max-w-7xl">

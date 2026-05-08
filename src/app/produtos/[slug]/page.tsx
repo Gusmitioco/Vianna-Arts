@@ -4,6 +4,8 @@ import { ArrowLeft } from 'lucide-react';
 import ProductImage from '@/components/ProductImage';
 import ProductMeasureForm from '@/components/ProductMeasureForm';
 import SectionTitle from '@/components/SectionTitle';
+import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
+import ProductJsonLd from '@/components/seo/ProductJsonLd';
 import { LOCAL_SEO, SITE_URL } from '@/data/seo';
 import { getProductBySlug } from '@/lib/products';
 
@@ -46,6 +48,15 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
 
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Início', url: SITE_URL },
+          { name: 'Produtos', url: `${SITE_URL}/produtos` },
+          { name: product.name, url: `${SITE_URL}/produtos/${product.slug}` },
+        ]}
+      />
+      <ProductJsonLd product={product} />
+
       <section className="relative overflow-hidden border-b border-white/10 bg-black px-5 py-16 lg:px-8">
         <div className="absolute inset-0 hero-metal opacity-70" />
         <div className="relative mx-auto max-w-7xl">
