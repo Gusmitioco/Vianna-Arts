@@ -62,3 +62,17 @@ NEXT_PUBLIC_SITE_URL=https://www.viannaarts.com
 
 Essa URL alimenta canonical tags, Open Graph, `robots.txt`, `sitemap.xml` e dados
 estruturados de SEO.
+
+## Google Search Console e Perfil da Empresa
+
+As etapas externas de SEO local estao documentadas em:
+
+```text
+docs/google-seo-local.md
+```
+
+Para verificar o site no Google Search Console por tag HTML, preencha na Vercel:
+
+```text
+NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=CODIGO_COPIADO_DO_GOOGLE
+```

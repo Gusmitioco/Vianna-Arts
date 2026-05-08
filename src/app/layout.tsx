@@ -7,6 +7,9 @@ import LocalBusinessJsonLd from '@/components/seo/LocalBusinessJsonLd';
 import { LOCAL_SEO, SITE_URL } from '@/data/seo';
 import '@/styles/index.css';
 
+const googleSiteVerification =
+  process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -41,6 +44,11 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  verification: googleSiteVerification
+    ? {
+        google: googleSiteVerification,
+      }
+    : undefined,
   icons: {
     icon: '/logo/va-logo.png',
     shortcut: '/logo/va-logo.png',
