@@ -52,7 +52,9 @@ export default function ProductCard({ product }: ProductCardProps) {
 function Price({ product }: { product: Product }) {
   if (!product.price && !product.promotionalPrice) {
     return (
-      <p className="mt-3 text-sm font-semibold text-white/58">Preço sob consulta</p>
+      <p className="mt-3 text-sm font-semibold text-white/58">
+        Sob consulta / sob encomenda
+      </p>
     );
   }
 
