@@ -1,10 +1,7 @@
 import Link from 'next/link';
-import {
-  deleteProductAction,
-  saveProductAction,
-  signOutAction,
-} from '@/app/admin/actions';
-import { CATEGORIES } from '@/data/products';
+import { signOutAction } from '@/app/admin/actions';
+import DeleteProductButton from '@/components/admin/DeleteProductButton';
+import ProductAdminForm from '@/components/admin/ProductAdminForm';
 import { hasSupabaseConfig } from '@/lib/env';
 import { requireAdmin } from '@/lib/auth';
 import { getAdminProducts } from '@/lib/products';
@@ -69,9 +66,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                 : 'border-red-400/35 bg-red-500/10 text-red-100'
             }`}
           >
-            {params.success
-              ? 'Alteração salva com sucesso.'
-              : 'Não foi possível concluir a operação.'}
+            {getAdminFeedback(params.success, params.error)}
           </p>
         )}
 
@@ -80,7 +75,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
             <h2 className="font-display text-3xl font-semibold text-white">
               Novo produto
             </h2>
-            <ProductForm />
+            <ProductAdminForm />
           </div>
 
           <div className="space-y-5">
@@ -105,22 +100,17 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                       {product.featured ? 'Destaque' : 'Sem destaque'}
                     </p>
                   </div>
-                  <form action={deleteProductAction}>
-                    <input type="hidden" name="id" value={product.id} />
-                    <button
-                      type="submit"
-                      className="border border-red-400/45 px-4 py-2 text-sm font-semibold text-red-100 hover:bg-red-500/15"
-                    >
-                      Excluir
-                    </button>
-                  </form>
+                  <DeleteProductButton
+                    productId={product.id}
+                    productName={product.name}
+                  />
                 </div>
                 <details className="mt-5">
                   <summary className="cursor-pointer text-sm font-semibold text-gold">
                     Editar produto
                   </summary>
                   <div className="mt-5">
-                    <ProductForm product={product} />
+                    <ProductAdminForm product={product} />
                   </div>
                 </details>
               </article>
@@ -129,89 +119,6 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         </div>
       </div>
     </section>
-  );
-}
-
-function ProductForm({
-  product,
-}: {
-  product?: Awaited<ReturnType<typeof getAdminProducts>>[number];
-}) {
-  return (
-    <form action={saveProductAction} className="mt-6 grid gap-5">
-      {product && <input type="hidden" name="id" value={product.id} />}
-      <input
-        type="hidden"
-        name="currentImageUrl"
-        value={product?.imageUrl ?? ''}
-      />
-      <label className="form-field">
-        Nome do produto
-        <input name="name" required defaultValue={product?.name} />
-      </label>
-      <label className="form-field">
-        Categoria
-        <select name="category" required defaultValue={product?.category ?? CATEGORIES[0]}>
-          {CATEGORIES.map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label className="form-field">
-        Descrição
-        <textarea name="description" required rows={4} defaultValue={product?.description} />
-      </label>
-      <div className="grid gap-5 md:grid-cols-2">
-        <label className="form-field">
-          Valor
-          <input
-            name="price"
-            inputMode="decimal"
-            placeholder="Ex.: 149,90"
-            defaultValue={product?.price ?? ''}
-          />
-        </label>
-        <label className="form-field">
-          Valor promocional
-          <input
-            name="promotionalPrice"
-            inputMode="decimal"
-            placeholder="Ex.: 129,90"
-            defaultValue={product?.promotionalPrice ?? ''}
-          />
-        </label>
-      </div>
-      <label className="form-field">
-        Foto do produto
-        <input name="image" type="file" accept="image/*" />
-      </label>
-      <div className="grid gap-3 text-sm text-white/70 md:grid-cols-2">
-        <label className="flex items-center gap-3 border border-white/10 bg-white/[0.035] p-3">
-          <input
-            name="isFeatured"
-            type="checkbox"
-            defaultChecked={product?.featured ?? false}
-          />
-          Exibir em destaque
-        </label>
-        <label className="flex items-center gap-3 border border-white/10 bg-white/[0.035] p-3">
-          <input
-            name="isPublished"
-            type="checkbox"
-            defaultChecked={product?.isPublished ?? true}
-          />
-          Produto publicado
-        </label>
-      </div>
-      <button
-        type="submit"
-        className="border border-gold bg-gold px-6 py-3.5 text-sm font-bold uppercase tracking-[0.12em] text-coal transition hover:bg-transparent hover:text-gold"
-      >
-        Salvar produto
-      </button>
-    </form>
   );
 }
 
@@ -232,4 +139,33 @@ function AdminSetupNotice() {
       </div>
     </section>
   );
+}
+
+function getAdminFeedback(success?: string, error?: string) {
+  if (success === 'product-saved') {
+    return 'Produto salvo com sucesso. O catálogo público foi atualizado.';
+  }
+
+  if (success === 'product-deleted') {
+    return 'Produto excluído com sucesso.';
+  }
+
+  const errors: Record<string, string> = {
+    'invalid-product':
+      'Preencha nome, categoria e descrição antes de salvar o produto.',
+    'save-product':
+      'Não foi possível salvar o produto. Confira os dados e tente novamente.',
+    'missing-product': 'Produto não encontrado para exclusão.',
+    'delete-product':
+      'Não foi possível excluir o produto. Tente novamente em alguns instantes.',
+    'invalid-image': 'Envie uma imagem válida com até 5 MB.',
+    'image-upload':
+      'Não foi possível enviar a imagem. Confira o arquivo e tente novamente.',
+  };
+
+  if (error && errors[error]) {
+    return errors[error];
+  }
+
+  return 'Não foi possível concluir a operação.';
 }
