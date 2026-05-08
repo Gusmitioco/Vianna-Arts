@@ -67,7 +67,7 @@ export default async function HomePage() {
           <SectionTitle
             eyebrow="Sobre a empresa"
             title="Peças em metal feitas para combinar com o seu projeto."
-            description="A Vianna Art's, conduzida por Kauan Vianna, desenvolve peças em metal e composições com madeira tratada para residências, lojas, empresas e projetos personalizados em Teixeira de Freitas."
+            description="A Vianna Art's, conduzida por Kauan Vianna, desenvolve peças em metal e composições com madeira tratada para residências, lojas, empresas e projetos personalizados em Teixeira de Freitas - BA."
           />
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="metric-card">

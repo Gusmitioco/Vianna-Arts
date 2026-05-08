@@ -4,6 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 import ProductImage from '@/components/ProductImage';
 import ProductMeasureForm from '@/components/ProductMeasureForm';
 import SectionTitle from '@/components/SectionTitle';
+import { LOCAL_SEO, SITE_URL } from '@/data/seo';
 import { getProductBySlug } from '@/lib/products';
 
 type ProductDetailPageProps = {
@@ -21,11 +22,15 @@ export async function generateMetadata({ params }: ProductDetailPageProps) {
   }
 
   return {
-    title: `${product.name} | Vianna Art's Metal & Design`,
-    description: product.description,
+    title: `${product.name} em Teixeira de Freitas`,
+    description: `${product.description} Solicite orçamento com a Vianna Art's em ${LOCAL_SEO.city} - ${LOCAL_SEO.state}.`,
+    alternates: {
+      canonical: `/produtos/${product.slug}`,
+    },
     openGraph: {
-      title: product.name,
-      description: product.description,
+      title: `${product.name} | Vianna Art's`,
+      description: `${product.description} Atendimento em ${LOCAL_SEO.city} - ${LOCAL_SEO.state}.`,
+      url: `${SITE_URL}/produtos/${product.slug}`,
       images: product.imageUrl ? [product.imageUrl] : ['/logo/vianna-logo.png'],
     },
   };
@@ -55,7 +60,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
             <SectionTitle
               eyebrow={product.category}
               title={product.name}
-              description={product.description}
+              description={`${product.description} Atendimento e orçamento em ${LOCAL_SEO.city} - ${LOCAL_SEO.state}.`}
             />
           </div>
         </div>
