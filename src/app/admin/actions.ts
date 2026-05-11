@@ -7,7 +7,14 @@ import { hasSupabaseConfig } from '@/lib/env';
 import { requireAdmin } from '@/lib/auth';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 
-const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+const PRODUCT_IMAGE_BUCKET = 'product-images';
+const MAX_IMAGE_SIZE = 8 * 1024 * 1024;
+const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+const IMAGE_EXTENSIONS: Record<string, string> = {
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp',
+};
 
 export async function signInAction(formData: FormData) {
   if (!hasSupabaseConfig()) {
@@ -53,16 +60,23 @@ export async function saveProductAction(formData: FormData) {
   const isFeatured = formData.get('isFeatured') === 'on';
   const isPublished = formData.get('isPublished') === 'on';
   const currentImageUrl = formData.get('currentImageUrl')?.toString() || null;
+  const removeImage = formData.get('removeImage') === '1';
 
   if (!name || !category || !description || !CATEGORIES.includes(category)) {
     redirect('/goblin?error=invalid-product');
   }
 
-  const imageUrl = await uploadProductImage(formData, currentImageUrl);
+  const slug = slugify(name);
+  const { imageUrl, shouldDeleteCurrentImage } = await resolveProductImage({
+    formData,
+    currentImageUrl,
+    removeImage,
+    slug,
+  });
 
   const payload = {
     name,
-    slug: slugify(name),
+    slug,
     category,
     description,
     price,
@@ -77,8 +91,16 @@ export async function saveProductAction(formData: FormData) {
     : await supabase.from('products').insert(payload);
 
   if (result.error) {
+    if (imageUrl && imageUrl !== currentImageUrl) {
+      await deleteProductImage(imageUrl);
+    }
+
     console.error('Failed to save product:', result.error.message);
     redirect('/goblin?error=save-product');
+  }
+
+  if (shouldDeleteCurrentImage) {
+    await deleteProductImage(currentImageUrl);
   }
 
   revalidatePath('/');
@@ -97,6 +119,12 @@ export async function deleteProductAction(formData: FormData) {
   }
 
   const supabase = await createSupabaseServerClient();
+  const { data: product } = await supabase
+    .from('products')
+    .select('image_url')
+    .eq('id', id)
+    .maybeSingle();
+
   const { error } = await supabase.from('products').delete().eq('id', id);
 
   if (error) {
@@ -104,50 +132,53 @@ export async function deleteProductAction(formData: FormData) {
     redirect('/goblin?error=delete-product');
   }
 
+  await deleteProductImage(product?.image_url ?? null);
+
   revalidatePath('/');
   revalidatePath('/produtos');
   revalidatePath('/goblin');
   redirect('/goblin?success=product-deleted');
 }
 
-async function uploadProductImage(formData: FormData, currentImageUrl: string | null) {
-  return uploadImage({
-    formData,
-    field: 'image',
-    bucket: 'product-images',
-    currentImageUrl,
-  });
-}
-
-async function uploadImage({
+async function resolveProductImage({
   formData,
-  field,
-  bucket,
   currentImageUrl,
+  removeImage,
+  slug,
 }: {
   formData: FormData;
-  field: string;
-  bucket: string;
   currentImageUrl: string | null;
+  removeImage: boolean;
+  slug: string;
 }) {
-  const image = formData.get(field);
+  const image = formData.get('image');
 
   if (!(image instanceof File) || image.size === 0) {
-    return currentImageUrl;
+    if (removeImage) {
+      return {
+        imageUrl: null,
+        shouldDeleteCurrentImage: Boolean(currentImageUrl),
+      };
+    }
+
+    return {
+      imageUrl: currentImageUrl,
+      shouldDeleteCurrentImage: false,
+    };
   }
 
-  if (!image.type.startsWith('image/') || image.size > MAX_IMAGE_SIZE) {
+  if (!ALLOWED_IMAGE_TYPES.includes(image.type) || image.size > MAX_IMAGE_SIZE) {
     redirect('/goblin?error=invalid-image');
   }
 
   const supabase = await createSupabaseServerClient();
-  const extension = image.name.split('.').pop()?.toLowerCase() ?? 'jpg';
-  const path = `${crypto.randomUUID()}.${extension}`;
+  const extension = IMAGE_EXTENSIONS[image.type];
+  const path = `${slug}/${crypto.randomUUID()}.${extension}`;
 
   const { error } = await supabase.storage
-    .from(bucket)
+    .from(PRODUCT_IMAGE_BUCKET)
     .upload(path, image, {
-      cacheControl: '3600',
+      cacheControl: '31536000',
       upsert: false,
       contentType: image.type,
     });
@@ -159,9 +190,42 @@ async function uploadImage({
 
   const {
     data: { publicUrl },
-  } = supabase.storage.from(bucket).getPublicUrl(path);
+  } = supabase.storage.from(PRODUCT_IMAGE_BUCKET).getPublicUrl(path);
 
-  return publicUrl;
+  return {
+    imageUrl: publicUrl,
+    shouldDeleteCurrentImage: Boolean(currentImageUrl),
+  };
+}
+
+async function deleteProductImage(imageUrl: string | null) {
+  const path = getProductImagePath(imageUrl);
+
+  if (!path) {
+    return;
+  }
+
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.storage.from(PRODUCT_IMAGE_BUCKET).remove([path]);
+
+  if (error) {
+    console.error('Failed to remove previous product image:', error.message);
+  }
+}
+
+function getProductImagePath(imageUrl: string | null) {
+  if (!imageUrl) {
+    return null;
+  }
+
+  const marker = `/storage/v1/object/public/${PRODUCT_IMAGE_BUCKET}/`;
+  const markerIndex = imageUrl.indexOf(marker);
+
+  if (markerIndex === -1) {
+    return null;
+  }
+
+  return decodeURIComponent(imageUrl.slice(markerIndex + marker.length));
 }
 
 function parseMoney(value?: string | null) {

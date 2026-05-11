@@ -1,7 +1,7 @@
 'use client';
 
-import { ImagePlus } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
+import { ImagePlus, RotateCcw, Trash2 } from 'lucide-react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { saveProductAction } from '@/app/admin/actions';
 import { CATEGORIES, type Product } from '@/data/products';
@@ -11,18 +11,31 @@ type ProductAdminFormProps = {
 };
 
 export default function ProductAdminForm({ product }: ProductAdminFormProps) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [previewUrl, setPreviewUrl] = useState(product?.imageUrl ?? '');
+  const [selectedPreviewUrl, setSelectedPreviewUrl] = useState<string | null>(null);
+  const [removeImage, setRemoveImage] = useState(false);
+  const hasCurrentImage = Boolean(product?.imageUrl);
 
   useEffect(() => {
     setPreviewUrl(product?.imageUrl ?? '');
+    setRemoveImage(false);
   }, [product?.imageUrl]);
+
+  useEffect(() => {
+    return () => {
+      if (selectedPreviewUrl) {
+        URL.revokeObjectURL(selectedPreviewUrl);
+      }
+    };
+  }, [selectedPreviewUrl]);
 
   const helperText = useMemo(() => {
     if (previewUrl) {
-      return 'Prévia da imagem selecionada. Ao salvar, a foto será enviada para o catálogo.';
+      return 'Prévia da imagem selecionada. Ao salvar, a foto será publicada no catálogo.';
     }
 
-    return 'Envie uma imagem em JPG, PNG ou WebP com até 5 MB.';
+    return 'Envie uma imagem em JPG, PNG ou WebP com até 8 MB.';
   }, [previewUrl]);
 
   return (
@@ -33,6 +46,7 @@ export default function ProductAdminForm({ product }: ProductAdminFormProps) {
         name="currentImageUrl"
         value={product?.imageUrl ?? ''}
       />
+      <input type="hidden" name="removeImage" value={removeImage ? '1' : '0'} />
 
       <label className="form-field">
         Nome do produto
@@ -82,16 +96,24 @@ export default function ProductAdminForm({ product }: ProductAdminFormProps) {
           <input
             name="image"
             type="file"
-            accept="image/*"
+            ref={fileInputRef}
+            accept="image/jpeg,image/png,image/webp"
             onChange={(event) => {
               const file = event.target.files?.[0];
 
               if (!file) {
-                setPreviewUrl(product?.imageUrl ?? '');
+                setPreviewUrl(removeImage ? '' : product?.imageUrl ?? '');
                 return;
               }
 
-              setPreviewUrl(URL.createObjectURL(file));
+              if (selectedPreviewUrl) {
+                URL.revokeObjectURL(selectedPreviewUrl);
+              }
+
+              const objectUrl = URL.createObjectURL(file);
+              setSelectedPreviewUrl(objectUrl);
+              setPreviewUrl(objectUrl);
+              setRemoveImage(false);
             }}
           />
         </label>
@@ -117,6 +139,42 @@ export default function ProductAdminForm({ product }: ProductAdminFormProps) {
           </div>
         </div>
         <p className="text-xs leading-6 text-white/45">{helperText}</p>
+
+        {hasCurrentImage && (
+          <div className="flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={() => {
+                if (fileInputRef.current) {
+                  fileInputRef.current.value = '';
+                }
+                if (selectedPreviewUrl) {
+                  URL.revokeObjectURL(selectedPreviewUrl);
+                  setSelectedPreviewUrl(null);
+                }
+                setRemoveImage(true);
+                setPreviewUrl('');
+              }}
+              className="inline-flex items-center gap-2 border border-red-400/40 px-3 py-2 text-xs font-bold uppercase tracking-[0.12em] text-red-100 transition hover:bg-red-500/15"
+            >
+              <Trash2 size={14} />
+              Remover foto
+            </button>
+            {removeImage && (
+              <button
+                type="button"
+                onClick={() => {
+                  setRemoveImage(false);
+                  setPreviewUrl(product?.imageUrl ?? '');
+                }}
+                className="inline-flex items-center gap-2 border border-white/15 px-3 py-2 text-xs font-bold uppercase tracking-[0.12em] text-white/70 transition hover:border-gold hover:text-gold"
+              >
+                <RotateCcw size={14} />
+                Restaurar foto
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="grid gap-3 text-sm text-white/70 md:grid-cols-2">

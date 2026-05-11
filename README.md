@@ -45,6 +45,23 @@ Sem `.env.local`, o site usa dados mockados e o painel exibe aviso de configura√
 Por seguranca, senha de administrador nao deve ficar em `.env.local`, SQL,
 README ou codigo-fonte.
 
+## Fotos dos produtos
+
+O painel admin em `/goblin` aceita upload de fotos em JPG, PNG e WebP com ate
+8 MB. As imagens sao salvas no bucket `product-images` do Supabase Storage.
+
+Se o projeto Supabase ja estava criado antes da melhoria de upload, execute:
+
+```text
+supabase/storage-product-images.sql
+```
+
+Recomendacoes de foto e fluxo de cadastro estao em:
+
+```text
+docs/fotos-produtos.md
+```
+
 ## URL publica e dominio
 
 Enquanto o dominio oficial nao estiver comprado, use:
