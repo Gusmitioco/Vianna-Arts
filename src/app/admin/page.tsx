@@ -13,6 +13,10 @@ type AdminPageProps = {
 
 export const metadata = {
   title: "Admin | Vianna Art's Metal & Design",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default async function AdminPage({ searchParams }: AdminPageProps) {

@@ -8,6 +8,10 @@ type LoginPageProps = {
 
 export const metadata = {
   title: "Admin Login | Vianna Art's Metal & Design",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
