@@ -47,7 +47,7 @@ export default function Hero() {
                 Metal, acabamento e design
               </p>
               <p className="mt-3 text-2xl font-semibold leading-snug text-white">
-                Peças com solda de qualidade, preço acessível e instalação gratuita.
+                Peças em metal para casas, lojas, empresas e projetos personalizados.
               </p>
             </div>
           </div>
