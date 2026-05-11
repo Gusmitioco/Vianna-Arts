@@ -9,6 +9,7 @@ import { COMPANY } from '../data/company';
 
 const navItems = [
   { label: 'Início', href: '/' },
+  { label: 'Serviços', href: '/servicos' },
   { label: 'Produtos', href: '/produtos' },
 ];
 
