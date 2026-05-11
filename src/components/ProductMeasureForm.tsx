@@ -42,11 +42,11 @@ export default function ProductMeasureForm({ product }: ProductMeasureFormProps)
         </div>
         <div>
           <h2 className="font-display text-3xl font-semibold text-white">
-            Solicitar orçamento
+            Falar sobre esta peça
           </h2>
           <p className="mt-3 text-sm leading-7 text-white/62">
-            Informe medidas aproximadas e detalhes do projeto. A mensagem será
-            enviada diretamente para o WhatsApp da Vianna Art's.
+            Use os campos abaixo se quiser adiantar algumas informações. O
+            atendimento final acontece diretamente com a Vianna Art's.
           </p>
         </div>
       </div>
@@ -107,7 +107,7 @@ export default function ProductMeasureForm({ product }: ProductMeasureFormProps)
           value={notes}
           onChange={(event) => setNotes(event.target.value)}
           rows={5}
-          placeholder="Ambiente de uso, referência, prazo, tipo de instalação ou outra informação importante"
+          placeholder="Detalhes adicionais"
         />
       </label>
 
@@ -116,7 +116,7 @@ export default function ProductMeasureForm({ product }: ProductMeasureFormProps)
         className="mt-6 inline-flex w-full items-center justify-center gap-2 border border-gold bg-gold px-6 py-3.5 text-sm font-bold uppercase tracking-[0.12em] text-coal transition hover:bg-transparent hover:text-gold md:w-auto"
       >
         <Send size={18} />
-        Enviar medidas pelo WhatsApp
+        Chamar no WhatsApp
       </a>
     </div>
   );

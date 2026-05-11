@@ -82,18 +82,18 @@ export default async function ServicePage({ params }: ServicePageProps) {
           />
           <div className="border border-gold/35 bg-gold/10 p-6">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-gold">
-              Orçamento
+              Atendimento
             </p>
             <p className="mt-3 text-sm leading-7 text-white/68">
-              Envie medidas, fotos do local ou referência da peça. O orçamento
-              pode ser feito pelo WhatsApp ou presencialmente.
+              Atendimento direto para conversar sobre estilo, acabamento,
+              disponibilidade e possibilidades para o seu projeto.
             </p>
             <a
               href={`${COMPANY.whatsappUrl}?text=${message}`}
               className="mt-5 inline-flex w-full items-center justify-center gap-2 border border-gold bg-gold px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-coal transition hover:bg-transparent hover:text-gold"
             >
               <MessageCircle size={17} />
-              Solicitar orçamento
+              Chamar no WhatsApp
             </a>
           </div>
         </div>
@@ -105,7 +105,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
             <SectionTitle
               eyebrow="Diferenciais"
               title="Produção artesanal com foco em resistência, acabamento e uso real."
-              description="Cada serviço é alinhado conforme ambiente, medidas, acabamento desejado e necessidade do cliente."
+              description="Cada serviço recebe atenção ao acabamento, à resistência da peça e ao resultado final no ambiente."
             />
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -155,7 +155,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
         <div className="mx-auto max-w-4xl">
           <SectionTitle
             eyebrow="Dúvidas comuns"
-            title="Informações úteis antes de pedir orçamento."
+            title="Informações úteis sobre este serviço."
           />
           <div className="mt-8 space-y-3">
             {service.faq.map((item) => (

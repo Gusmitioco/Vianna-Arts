@@ -10,12 +10,11 @@ export default function WhatsAppCTA() {
             Atendimento direto
           </p>
           <h2 className="mt-3 font-display text-3xl font-semibold text-white md:text-4xl">
-            Quer uma peça sob medida ou um orçamento?
+            Quer uma peça sob medida ou um atendimento direto?
           </h2>
           <p className="mt-4 max-w-2xl text-white/65">
-            Envie sua ideia, medidas ou referência pelo WhatsApp. O orçamento
-            pode ser feito online ou presencialmente, com prazo definido conforme
-            cada projeto.
+            Fale com a Vianna Art's pelo WhatsApp e receba um atendimento próximo,
+            direto e alinhado ao tipo de peça que você procura.
           </p>
         </div>
         <a

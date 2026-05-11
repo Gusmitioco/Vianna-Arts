@@ -13,6 +13,7 @@ import FeaturedProducts from '@/components/FeaturedProducts';
 import Hero from '@/components/Hero';
 import SectionTitle from '@/components/SectionTitle';
 import ServiceCard from '@/components/ServiceCard';
+import TrustHighlights from '@/components/TrustHighlights';
 import WhatsAppCTA from '@/components/WhatsAppCTA';
 import { getFeaturedProducts } from '@/lib/products';
 
@@ -61,6 +62,7 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
+      <TrustHighlights />
 
       <section className="bg-coal px-5 py-20 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
@@ -100,7 +102,7 @@ export default async function HomePage() {
             <SectionTitle
               eyebrow="Trabalho artesanal"
               title="Do jeito que você imagina, com orientação para ficar funcional."
-              description="Cada projeto é alinhado por WhatsApp ou presencialmente, considerando medidas, local de instalação, acabamento desejado e combinação com madeira quando fizer sentido."
+              description="Cada projeto é tratado com atenção ao uso, ao acabamento e ao estilo do ambiente, mantendo a identidade artesanal da Vianna Art's."
             />
             <div className="relative min-h-[360px] overflow-hidden border border-gold/25 bg-metal p-8 shadow-hard">
               <div className="absolute inset-0 product-texture" />
@@ -125,7 +127,7 @@ export default async function HomePage() {
           <SectionTitle
             eyebrow="Serviços"
             title="Soluções para casas, lojas, empresas e projetos personalizados."
-            description="A Vianna Art's trabalha com peças em metal, peças com madeira, instalação e orçamentos presenciais ou por WhatsApp."
+            description="A Vianna Art's trabalha com peças em metal, peças com madeira, instalação e atendimento direto para projetos residenciais e comerciais."
             align="center"
           />
           <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
